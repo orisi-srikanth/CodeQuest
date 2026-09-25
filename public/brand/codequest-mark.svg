@@ -1,0 +1,23 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CodeQuest">
+  <defs>
+    <linearGradient id="cq-cyan" x1="14" y1="46" x2="30" y2="19" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0891b2"/>
+      <stop offset="0.55" stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#67e8f9"/>
+    </linearGradient>
+    <linearGradient id="cq-magenta" x1="34" y1="46" x2="50" y2="19" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#be185d"/>
+      <stop offset="0.5" stop-color="#ec4899"/>
+      <stop offset="1" stop-color="#f472b6"/>
+    </linearGradient>
+    <linearGradient id="cq-tile" x1="4" y1="2" x2="60" y2="62" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0c1220"/>
+      <stop offset="1" stop-color="#05070d"/>
+    </linearGradient>
+  </defs>
+  <rect x="1.25" y="1.25" width="61.5" height="61.5" rx="15" fill="url(#cq-tile)"/>
+  <rect x="1.25" y="1.25" width="61.5" height="61.5" rx="15" stroke="rgba(148,163,184,0.16)" stroke-width="1.5"/>
+  <path d="M25.5 19.5 13 32l12.5 12.5" stroke="url(#cq-cyan)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M38.5 19.5 51 32 38.5 44.5" stroke="url(#cq-magenta)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M26.5 34.5 32 28.5l5.5 6" stroke="#22d3ee" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+</svg>

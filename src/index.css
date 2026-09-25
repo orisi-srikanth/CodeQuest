@@ -1,0 +1,168 @@
+/* ---------------------------------------------------------------------------
+   CodeQuest — global stylesheet
+   Fonts are bundled via @fontsource (no external requests), so the app renders
+   identically offline and inside sandboxed previews.
+--------------------------------------------------------------------------- */
+@import '@fontsource-variable/inter/index.css';
+@import '@fontsource-variable/jetbrains-mono/index.css';
+/* Handwritten face — used only for the authorship signature in the footer. */
+@import '@fontsource-variable/caveat/index.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    /* Shared nav height token — used by layout offsets and anchor scroll. */
+    --cq-nav-h: 4rem;
+  }
+
+  * {
+    border-color: rgba(255, 255, 255, 0.06);
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scroll-padding-top: var(--cq-nav-h);
+  }
+
+  html:focus-within {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ink-950 font-sans text-slate-25 antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgba(34, 211, 238, 0.24);
+    color: #f6f8fc;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgba(34, 211, 238, 0.7);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #05070d;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1e2637;
+    border-radius: 999px;
+    border: 2px solid #05070d;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2a3446;
+  }
+}
+
+@layer components {
+  /* Page shell ------------------------------------------------------------ */
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8;
+  }
+
+  /* Surfaces -------------------------------------------------------------- */
+  .surface {
+    @apply rounded-2xl border border-white/[0.07] bg-ink-850/70 shadow-card;
+  }
+
+  .hairline {
+    @apply h-px w-full bg-white/[0.06];
+  }
+
+  /* Typography ------------------------------------------------------------ */
+  .text-brand {
+    @apply bg-gradient-to-r from-signal-cyan to-signal-magenta bg-clip-text text-transparent;
+  }
+
+  .eyebrow {
+    @apply font-mono text-[0.6875rem] uppercase tracking-[0.22em] text-slate-400;
+  }
+
+  /* Line-by-line headline reveal: outer clips, inner rises. ---------------- */
+  .reveal-line {
+    @apply block overflow-hidden pb-[0.08em];
+  }
+  .reveal-line > span {
+    @apply block animate-rise-mask;
+  }
+
+  /* Pointer-tracked highlight (see useSpotlight hook). -------------------- */
+  .spotlight {
+    position: relative;
+    isolation: isolate;
+  }
+  .spotlight::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    background: radial-gradient(
+      300px circle at var(--mx, 50%) var(--my, 0%),
+      rgba(34, 211, 238, 0.1),
+      transparent 68%
+    );
+  }
+  .spotlight:hover::before,
+  .spotlight:focus-within::before {
+    opacity: 1;
+  }
+}
+
+@layer utilities {
+  /* Scroll-triggered entrance (used with useReveal). ---------------------- */
+  .reveal {
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms);
+  }
+  .reveal[data-reveal='pending'] {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  .reveal[data-reveal='visible'] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .animation-delay {
+    animation-delay: var(--d, 0ms);
+  }
+
+  /* Text masked edges for long decorative code strings. ------------------- */
+  .fade-x {
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+}
+
+/* Respect the user's motion preference — kill ambient + entrance motion. --- */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal,
+  .reveal[data-reveal='pending'] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
