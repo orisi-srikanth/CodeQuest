@@ -14,12 +14,14 @@ export default defineConfig({
     },
   },
 
+  // Local development server
   server: {
     host: '0.0.0.0',
     port: 5173,
     strictPort: true,
     allowedHosts: true,
 
+    // Local FastAPI backend
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:8000',
@@ -28,6 +30,7 @@ export default defineConfig({
     },
   },
 
+  // Local production preview
   preview: {
     host: '0.0.0.0',
     port: 4173,
