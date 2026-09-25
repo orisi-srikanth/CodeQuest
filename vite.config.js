@@ -5,22 +5,26 @@ import { fileURLToPath, URL } from 'node:url'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+
+  // GitHub Pages repository path
   base: '/CodeQuest/',
+
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+
+  // Development server
   server: {
     host: '0.0.0.0',
     port: 5173,
     strictPort: true,
-    // Sandboxed previews serve the app through a proxied host
-    // (e.g. *.e2b.app), so host checking is relaxed. Tighten this to an
-    // explicit allow-list before deploying to production.
+
+    // Required for sandbox/preview environments
     allowedHosts: true,
-    // The browser talks only to this dev server; Vite forwards API calls to the
-    // FastAPI service, which is what performs the outbound platform fetches.
+
+    // Forward /api requests to FastAPI
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:8000',
@@ -28,6 +32,8 @@ export default defineConfig({
       },
     },
   },
+
+  // Production preview server
   preview: {
     host: '0.0.0.0',
     port: 4173,
